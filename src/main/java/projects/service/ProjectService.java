@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import projects.dao.ProjectDao;
 import projects.entity.Project;
@@ -19,6 +20,11 @@ public class ProjectService {
 		//instance variable for the ProjectsDao
 		private ProjectDao projectDao = new ProjectDao();
 		
+		
+		public Project fetchProjectById(Integer projectId) {
+			return projectDao.fecthProjectById(projectId).orElseThrow(() -> new NoSuchElementException(
+					"Project ID: " + projectId + " does not exist."));
+		}
 		
 		//--------- METHOD: Create & Populate Tables -----------------------------
 		
@@ -144,6 +150,13 @@ public class ProjectService {
 		public Project addProject(Project project) {
 			
 			return projectDao.insertProject(project);
+		}
+
+		//--------- METHOD: Fetch Projects ----------------------------------------
+
+		public List<Project> fetchProjects() {
+			
+			return projectDao.fetchAllProjects();
 		}
 
 }

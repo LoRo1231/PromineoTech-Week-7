@@ -20,8 +20,11 @@ public class ProjectsApp {
 	// @formatter:off
 	private List<String> operations = List.of(
 			"1) Create and populate all tables.",
-			"2) Add a project."
+			"2) Add a project.",
+			"3) List projects.",
+			"4) Select a project."
 			);
+	private Object currentProject;
 	// @formatter:on
 			
 			
@@ -64,6 +67,14 @@ public class ProjectsApp {
 					addProject();
 					break;
 					
+				case 3:
+					listProjects();
+					break;
+					
+				case 4:
+					setCurrentProject();
+					break;
+					
 				default:
 					System.out.println("\n" + operation + " is not vaild, try again.");
 					break;
@@ -75,7 +86,41 @@ public class ProjectsApp {
 		
 	}
 	
+	//------------- METHOD: Select Project -------------------------------------------
 	
+	private void setCurrentProject() {
+		
+		List<Project> projects = listProjects();
+		
+		Integer projectId = getIntInput("Enter project ID");
+		
+		currentProject = null;
+		
+		for(Project project : projects) {
+			if(project.getProjectId().equals(projectId)) {
+				currentProject = projectService.fetchProjectById(projectId);
+				break;
+			}
+		}
+		
+		if(Objects.isNull(currentProject)) {
+			System.out.println("\nInvaild project selected.");
+		}
+	}
+
+	//------------- METHOD: List Projects -------------------------------------------
+	
+	private List<Project> listProjects() {
+		
+		List<Project> projects = projectService.fetchProjects();
+		
+		System.out.println("\nProjects:");
+		
+		projects.forEach(project -> System.out.println("   " + project.getProjectId() + ": " + project.getProjectName()));
+		
+		return projects;
+	}
+
 	//------------- METHOD: Add Project -------------------------------------------
 
 	private void addProject() {
@@ -97,7 +142,9 @@ public class ProjectsApp {
 		project.setNotes(notes);
 		
 		Project dbProject = projectService.addProject(project);
-		System.out.println("You added this project: \n" + dbProject);
+		System.out.println("You added this project:\n" + dbProject);
+		
+		currentProject = projectService.fetchProjectById(dbProject.getProjectId());
 		
 	}
 	

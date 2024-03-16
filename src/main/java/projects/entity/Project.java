@@ -14,8 +14,8 @@ import java.util.List;
 public class Project {
   private Integer projectId;
   private String projectName;
-  private BigDecimal estimatedHours;
-  private BigDecimal actualHours;
+  private Integer estimatedHours;
+  private Integer actualHours;
   private Integer difficulty;
   private String notes;
 
@@ -39,20 +39,20 @@ public class Project {
     this.projectName = projectName;
   }
 
-  public BigDecimal getEstimatedHours() {
+  public Integer getEstimatedHours() {
     return estimatedHours;
   }
 
-  public void setEstimatedHours(BigDecimal estimatedHours) {
-    this.estimatedHours = estimatedHours;
+  public void setEstimatedHours(Integer estimatedHours2) {
+    this.estimatedHours = estimatedHours2;
   }
 
-  public BigDecimal getActualHours() {
+  public Integer getActualHours() {
     return actualHours;
   }
 
-  public void setActualHours(BigDecimal actualHours) {
-    this.actualHours = actualHours;
+  public void setActualHours(Integer actualHours2) {
+    this.actualHours = actualHours2;
   }
 
   public Integer getDifficulty() {
